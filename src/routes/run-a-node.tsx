@@ -84,6 +84,47 @@ function RunANode() {
       </div>
 
       <div className="rounded-lg border border-border bg-secondary/50 p-5">
+        <h2 className="text-sm font-semibold">Connecting a node</h2>
+        <p className="mt-2 text-xs text-muted-foreground">
+          Two endpoints, both ways. Your node pushes its records in, and reads the merged network
+          state back out.
+        </p>
+        <div className="mt-4 space-y-4 font-mono text-[11px]">
+          <div>
+            <div className="text-primary">POST /api/public/ingest</div>
+            <div className="mt-1 text-muted-foreground">
+              header: x-node-key: &lt;your node key&gt;
+            </div>
+            <pre className="mt-2 overflow-x-auto rounded border border-border bg-background p-3 text-muted-foreground">
+{`{
+  "identities": [
+    { "did": "did:civic:...", "username": "ada",
+      "type": "human|agent|organization|nonhuman",
+      "display_name": "Ada", "also_on": ["other-node-slug"] }
+  ],
+  "actions": [
+    { "id": "ACT-0317", "title": "...", "summary": "...",
+      "status": "open|passed|rejected|draft",
+      "closes_at": "2026-10-01T00:00:00Z" }
+  ],
+  "totals": [
+    { "action_id": "ACT-0317", "votes_for": 120,
+      "votes_against": 40, "approval": 75 }
+  ]
+}`}
+            </pre>
+          </div>
+          <div>
+            <div className="text-primary">GET /api/public/snapshot</div>
+            <div className="mt-1 text-muted-foreground">
+              no auth · returns nodes, identities, identity_nodes, actions and per-node totals
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="rounded-lg border border-border bg-secondary/50 p-5">
+
         <h2 className="text-sm font-semibold">What a node must never do</h2>
         <ul className="mt-3 space-y-1.5 text-xs text-muted-foreground">
           <li>· Publish an identity it cannot trace to a consenting participant or controller.</li>
