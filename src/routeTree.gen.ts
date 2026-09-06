@@ -10,8 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as NodesRouteImport } from './routes/nodes'
 import { Route as RegistryRouteImport } from './routes/registry'
+import { Route as RunANodeRouteImport } from './routes/run-a-node'
 import { Route as ProposalsIndexRouteImport } from './routes/proposals.index'
 import { Route as ProposalsIdRouteImport } from './routes/proposals.$id'
 import { Route as ProtocolIndexRouteImport } from './routes/protocol.index'
@@ -22,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NodesRoute = NodesRouteImport.update({
   id: '/nodes',
   path: '/nodes',
@@ -30,6 +37,11 @@ const NodesRoute = NodesRouteImport.update({
 const RegistryRoute = RegistryRouteImport.update({
   id: '/registry',
   path: '/registry',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RunANodeRoute = RunANodeRouteImport.update({
+  id: '/run-a-node',
+  path: '/run-a-node',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProposalsIndexRoute = ProposalsIndexRouteImport.update({
@@ -55,8 +67,10 @@ const ProtocolDocRoute = ProtocolDocRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/nodes': typeof NodesRoute
   '/registry': typeof RegistryRoute
+  '/run-a-node': typeof RunANodeRoute
   '/proposals/$id': typeof ProposalsIdRoute
   '/protocol/$doc': typeof ProtocolDocRoute
   '/proposals/': typeof ProposalsIndexRoute
@@ -64,8 +78,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/nodes': typeof NodesRoute
   '/registry': typeof RegistryRoute
+  '/run-a-node': typeof RunANodeRoute
   '/proposals/$id': typeof ProposalsIdRoute
   '/protocol/$doc': typeof ProtocolDocRoute
   '/proposals': typeof ProposalsIndexRoute
@@ -74,8 +90,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/nodes': typeof NodesRoute
   '/registry': typeof RegistryRoute
+  '/run-a-node': typeof RunANodeRoute
   '/proposals/$id': typeof ProposalsIdRoute
   '/protocol/$doc': typeof ProtocolDocRoute
   '/proposals/': typeof ProposalsIndexRoute
@@ -85,8 +103,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/nodes'
     | '/registry'
+    | '/run-a-node'
     | '/proposals/$id'
     | '/protocol/$doc'
     | '/proposals/'
@@ -94,8 +114,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/nodes'
     | '/registry'
+    | '/run-a-node'
     | '/proposals/$id'
     | '/protocol/$doc'
     | '/proposals'
@@ -103,8 +125,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/nodes'
     | '/registry'
+    | '/run-a-node'
     | '/proposals/$id'
     | '/protocol/$doc'
     | '/proposals/'
@@ -113,8 +137,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   NodesRoute: typeof NodesRoute
   RegistryRoute: typeof RegistryRoute
+  RunANodeRoute: typeof RunANodeRoute
   ProposalsIdRoute: typeof ProposalsIdRoute
   ProtocolDocRoute: typeof ProtocolDocRoute
   ProposalsIndexRoute: typeof ProposalsIndexRoute
@@ -130,6 +156,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/nodes': {
       id: '/nodes'
       path: '/nodes'
@@ -142,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/registry'
       fullPath: '/registry'
       preLoaderRoute: typeof RegistryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/run-a-node': {
+      id: '/run-a-node'
+      path: '/run-a-node'
+      fullPath: '/run-a-node'
+      preLoaderRoute: typeof RunANodeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/proposals/': {
@@ -177,8 +217,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   NodesRoute: NodesRoute,
   RegistryRoute: RegistryRoute,
+  RunANodeRoute: RunANodeRoute,
   ProposalsIdRoute: ProposalsIdRoute,
   ProtocolDocRoute: ProtocolDocRoute,
   ProposalsIndexRoute: ProposalsIndexRoute,
