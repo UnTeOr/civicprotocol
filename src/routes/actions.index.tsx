@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Bar, Panel, SectionHead } from "@/components/site-shell";
 import { useI18n } from "@/lib/i18n";
-import { actions } from "@/data/network";
+import { useNetworkData } from "@/lib/use-network-data";
 
 export const Route = createFileRoute("/actions/")({
   head: () => ({
@@ -30,6 +30,7 @@ function Actions() {
   const [state, setState] = useState<(typeof states)[number]>("all");
   const [query, setQuery] = useState("");
   const n = new Intl.NumberFormat();
+  const { actions } = useNetworkData();
 
   const rows = useMemo(
     () =>
@@ -38,7 +39,7 @@ function Actions() {
           (state === "all" || p.status === state) &&
           (!query.trim() || p.title.toLowerCase().includes(query.trim().toLowerCase())),
       ),
-    [state, query],
+    [state, query, actions],
   );
 
   return (

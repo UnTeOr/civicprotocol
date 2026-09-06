@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Panel, SectionHead } from "@/components/site-shell";
 import { useI18n } from "@/lib/i18n";
-import { identities, type IdentityType } from "@/data/network";
+import type { IdentityType } from "@/data/network";
+import { useNetworkData } from "@/lib/use-network-data";
 
 export const Route = createFileRoute("/registry")({
   head: () => ({
@@ -31,6 +32,7 @@ function Registry() {
   const [query, setQuery] = useState("");
   const [type, setType] = useState<IdentityType | "all">("all");
   const n = new Intl.NumberFormat();
+  const { identities } = useNetworkData();
 
   const rows = useMemo(
     () =>
@@ -44,7 +46,7 @@ function Registry() {
           i.homeNode.toLowerCase().includes(q);
         return matchType && matchQuery;
       }),
-    [query, type],
+    [query, type, identities],
   );
 
   return (
