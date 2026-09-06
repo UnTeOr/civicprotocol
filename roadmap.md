@@ -11,7 +11,7 @@
 - [ ] External Supabase backend (NOT Lovable Cloud — user's own project, `civicprotocol` schema only):
   - [x] Credentials stored (URL + publishable key in env; service-role key + Postgres URL encrypted)
   - [x] Connection module `src/lib/civic-db.server.ts` scoped to `civicprotocol` schema
-  - [ ] User runs `civic-supabase-setup.sql` in their Supabase SQL editor (creates schema, tables, grants, exposes schema)
+  - [x] Schema, tables, grants + RLS created directly in the external Supabase (user only needs to expose `civicprotocol`)
   - [x] Secure `/api/public/ingest` endpoint — nodes push identities/actions/vote totals with per-node keys
   - [x] Public `/api/public/snapshot` endpoint — nodes pull the merged network state back (push-out side)
   - [x] Data layer reads live from Supabase with automatic fallback to the mock snapshot
