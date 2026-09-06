@@ -82,10 +82,15 @@ export function checkSchemaOwnership() {
         violations.push(`${at} — Supabase .schema("${schemaCall[1]}") is not owned by this platform.`);
       }
 
-      // 2 & 4. any reference to a foreign platform schema
+      // 2 & 4. schema-qualified access to a foreign platform schema
+      // (comments are ignored: only real qualified references count)
+      const code = line.replace(/--.*$/, "").replace(/\/\/.*$/, "").replace(/\*.*$/, "");
       for (const foreign of FOREIGN_SCHEMAS) {
-        const re = new RegExp(`(?:^|[^\\w-])${foreign}\\s*\\.|["'\`]${foreign}["'\`]`, "i");
-        if (re.test(line)) {
+        const re = new RegExp(
+          `(?:^|[^\\w."'\`-])${foreign}\\.[a-z_]|["'\`]${foreign}\\.[a-z_]|db:\\s*{\\s*schema:\\s*["'\`]${foreign}["'\`]`,
+          "i",
+        );
+        if (re.test(code)) {
           violations.push(`${at} — references foreign platform schema "${foreign}".`);
         }
       }
