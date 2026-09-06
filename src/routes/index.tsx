@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Bar, Panel, SectionHead } from "@/components/site-shell";
 import { useI18n } from "@/lib/i18n";
-import { documents, identities, networkStats, nodes, proposals } from "@/data/network";
+import { actions, documents, identities, networkStats, nodes } from "@/data/network";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -64,24 +64,24 @@ function Overview() {
         <Stat label={t("stat.nodes")} value={String(networkStats.nodes)} />
         <Stat label={t("stat.participants")} value={n.format(networkStats.participants)} />
         <Stat label={t("stat.agents")} value={n.format(networkStats.agents)} />
-        <Stat label={t("stat.proposals")} value={String(networkStats.openProposals)} />
+        <Stat label={t("stat.actions")} value={String(networkStats.openActions)} />
         <Stat label={t("stat.votes")} value={n.format(networkStats.votes)} />
         <Stat label={t("stat.health")} value={`${networkStats.health}%`} />
       </section>
 
       <section>
         <SectionHead
-          title={t("home.proposals")}
-          lede={t("home.proposalsLede")}
+          title={t("home.actions")}
+          lede={t("home.actionsLede")}
           action={
-            <Link to="/proposals" className="font-mono text-[11px] text-primary">
+            <Link to="/actions" className="font-mono text-[11px] text-primary">
               {t("common.viewAll")} →
             </Link>
           }
         />
         <div className="grid gap-3 md:grid-cols-2">
-          {proposals.slice(0, 4).map((p) => (
-            <Link key={p.id} to="/proposals/$id" params={{ id: p.id }}>
+          {actions.slice(0, 4).map((p) => (
+            <Link key={p.id} to="/actions/$id" params={{ id: p.id }}>
               <Panel className="h-full p-4 transition-colors hover:border-primary/50">
                 <div className="flex items-center gap-2 font-mono text-[11px] text-muted-foreground">
                   <span>{p.id.toUpperCase()}</span>

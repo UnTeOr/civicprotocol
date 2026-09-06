@@ -85,13 +85,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Read-only observatory for the CIVIC Protocol: identities, nodes, proposals and vote totals across the decentralized civic network.",
+          "Read-only observatory for the CIVIC Protocol: identities, nodes, actions and vote totals across the decentralized civic network.",
       },
       { property: "og:title", content: "CIVIC Protocol — Network Data Layer" },
       {
         property: "og:description",
         content:
-          "Read-only observatory for the CIVIC Protocol: identities, nodes, proposals and vote totals across the decentralized civic network.",
+          "Read-only observatory for the CIVIC Protocol: identities, nodes, actions and vote totals across the decentralized civic network.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -8,7 +8,7 @@ export const Route = createFileRoute("/run-a-node")({
       {
         name: "description",
         content:
-          "Minimum requirements to run a CIVIC node: publish identities, proposals and votes in a verifiable shape so the rest of the network can read them.",
+          "Minimum requirements to run a CIVIC node: publish identities, actions and votes in a verifiable shape so the rest of the network can read them.",
       },
       { property: "og:title", content: "Run a Node — CIVIC Protocol" },
       {
@@ -34,7 +34,7 @@ const steps = [
   {
     n: "03",
     title: "Publish a readable record",
-    body: "Proposals, score votes, decisions and public profiles are published in the protocol's shape, with the experience record attached to the outcome that produced it.",
+    body: "Actions, score votes, decisions and public profiles are published in the protocol's shape, with the experience record attached to the outcome that produced it.",
   },
   {
     n: "04",

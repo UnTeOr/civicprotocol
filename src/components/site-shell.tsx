@@ -8,7 +8,7 @@ const navItems = [
   { to: "/", key: "nav.overview" },
   { to: "/registry", key: "nav.registry" },
   { to: "/nodes", key: "nav.nodes" },
-  { to: "/proposals", key: "nav.proposals" },
+  { to: "/actions", key: "nav.actions" },
   { to: "/protocol", key: "nav.protocol" },
   { to: "/run-a-node", key: "nav.node" },
   { to: "/about", key: "nav.about" },
