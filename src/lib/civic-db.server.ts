@@ -19,7 +19,7 @@ export const CIVIC_SCHEMA = "civicprotocol";
  */
 export function civicPublic(): CivicClient {
   const key = process.env["CIVIC_SUPABASE_PUBLISHABLE_KEY"]!;
-  return createClient<any>(process.env["CIVIC_SUPABASE_URL"]!, key, {
+  return createClient<any, "civicprotocol", any>(process.env["CIVIC_SUPABASE_URL"]!, key, {
     db: { schema: CIVIC_SCHEMA },
     auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
     // New-format sb_ keys are opaque, not JWTs — send apikey only, never
@@ -44,7 +44,7 @@ export function civicPublic(): CivicClient {
  */
 export function civicAdmin(): CivicClient {
   const key = process.env["CIVIC_SUPABASE_SERVICE_ROLE_KEY"]!;
-  return createClient<any>(process.env["CIVIC_SUPABASE_URL"]!, key, {
+  return createClient<any, "civicprotocol", any>(process.env["CIVIC_SUPABASE_URL"]!, key, {
     db: { schema: CIVIC_SCHEMA },
     auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
     global: {
