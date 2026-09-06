@@ -15,7 +15,7 @@ export const Route = createFileRoute("/api/public/snapshot")({
     handlers: {
       GET: async () => {
         const { civicPublic } = await import("@/lib/civic-db.server");
-        const db = civicPublic();
+        const db = civicPublic() as any;
 
         const [nodes, identities, identityNodes, actions, totals] = await Promise.all([
           db.from("nodes").select("slug, name, url, status, last_seen_at, created_at"),

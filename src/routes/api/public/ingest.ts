@@ -68,7 +68,7 @@ export const Route = createFileRoute("/api/public/ingest")({
         }
 
         const { civicAdmin } = await import("@/lib/civic-db.server");
-        const db = civicAdmin();
+        const db = civicAdmin() as any;
 
         // Verify the node key and resolve the node slug.
         const { data: node } = await db
