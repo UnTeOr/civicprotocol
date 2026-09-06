@@ -1,9 +1,10 @@
 -- ============================================================
--- CIVIC Protocol — external Supabase setup
--- Run this ONCE in your Supabase project's SQL Editor.
--- Everything lives in the `civicprotocol` schema; your other
--- schemas (public, med, ...) are never touched.
+-- CIVIC Protocol — schema initialisation (already applied)
+-- Everything lives in the `civicprotocol` schema; no other
+-- platform's schema is read, written, altered, or migrated.
 -- ============================================================
+
+SET LOCAL app.platform = 'civicprotocol';
 
 CREATE SCHEMA IF NOT EXISTS civicprotocol;
 
@@ -89,11 +90,9 @@ CREATE POLICY "public read actions"      ON civicprotocol.actions            FOR
 CREATE POLICY "public read vote totals"  ON civicprotocol.action_node_totals FOR SELECT TO anon USING (true);
 
 -- ------------------------------------------------------------
--- Expose the schema to the Data API.
--- IMPORTANT: keep your existing schemas in the list (public, med,
--- storage, graphql_public) — this ADDS civicprotocol.
--- Easier alternative: Supabase Dashboard → Settings → API →
--- "Exposed schemas" → add `civicprotocol`.
+-- Exposing the schema to the Data API is a project-wide setting and
+-- is therefore done by the project owner in the Supabase Dashboard:
+--   Settings → API → "Exposed schemas" → ADD `civicprotocol`
+-- (keep every schema already listed there — only add ours).
+-- This project deliberately installs no database-wide statements.
 -- ------------------------------------------------------------
-ALTER DATABASE postgres SET pgrst.db_schemas = 'public, med, civicprotocol';
-NOTIFY pgrst, 'reload config';
