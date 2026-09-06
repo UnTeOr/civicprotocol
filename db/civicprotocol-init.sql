@@ -1,9 +1,10 @@
 -- ============================================================
--- CIVIC Protocol — external Supabase setup
--- Run this ONCE in your Supabase project's SQL Editor.
--- Everything lives in the `civicprotocol` schema; your other
--- schemas (public, med, ...) are never touched.
+-- CIVIC Protocol — schema initialisation (already applied)
+-- Everything lives in the `civicprotocol` schema; no other
+-- platform's schema is read, written, altered, or migrated.
 -- ============================================================
+
+SET LOCAL app.platform = 'civicprotocol';
 
 CREATE SCHEMA IF NOT EXISTS civicprotocol;
 
