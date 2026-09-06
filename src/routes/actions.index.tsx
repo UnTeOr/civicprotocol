@@ -2,30 +2,30 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Bar, Panel, SectionHead } from "@/components/site-shell";
 import { useI18n } from "@/lib/i18n";
-import { proposals } from "@/data/network";
+import { actions } from "@/data/network";
 
 export const Route = createFileRoute("/actions/")({
   head: () => ({
     meta: [
-      { title: "Proposals & Vote Totals — CIVIC Protocol" },
+      { title: "Actions & Vote Totals — CIVIC Protocol" },
       {
         name: "description",
         content:
-          "Aggregated score-vote output for every proposal across all CIVIC nodes: approval percentages, participation and per-node breakdown.",
+          "Aggregated score-vote output for every action across all CIVIC nodes: approval percentages, participation and per-node breakdown.",
       },
-      { property: "og:title", content: "Proposals & Vote Totals — CIVIC Protocol" },
+      { property: "og:title", content: "Actions & Vote Totals — CIVIC Protocol" },
       {
         property: "og:description",
         content: "Approval percentages and per-node vote breakdowns across the CIVIC network.",
       },
     ],
   }),
-  component: Proposals,
+  component: Actions,
 });
 
 const states = ["all", "voting", "ratified", "closed"] as const;
 
-function Proposals() {
+function Actions() {
   const { t } = useI18n();
   const [state, setState] = useState<(typeof states)[number]>("all");
   const [query, setQuery] = useState("");
@@ -33,7 +33,7 @@ function Proposals() {
 
   const rows = useMemo(
     () =>
-      proposals.filter(
+      actions.filter(
         (p) =>
           (state === "all" || p.status === state) &&
           (!query.trim() || p.title.toLowerCase().includes(query.trim().toLowerCase())),
@@ -45,15 +45,15 @@ function Proposals() {
     <div className="space-y-6">
       <SectionHead
         kicker="Ledger"
-        title={t("home.proposals")}
-        lede={t("home.proposalsLede")}
+        title={t("home.actions")}
+        lede={t("home.actionsLede")}
       />
 
       <div className="flex flex-wrap items-center gap-2">
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search proposals…"
+          placeholder="Search actions…"
           className="h-9 w-72 rounded-md border border-border bg-card px-3 font-mono text-xs outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring"
         />
         <div className="flex gap-1 font-mono text-[11px]">
@@ -75,7 +75,7 @@ function Proposals() {
 
       <div className="space-y-3">
         {rows.map((p) => (
-          <Link key={p.id} to="/proposals/$id" params={{ id: p.id }} className="block">
+          <Link key={p.id} to="/actions/$id" params={{ id: p.id }} className="block">
             <Panel className="p-4 transition-colors hover:border-primary/50">
               <div className="grid gap-4 md:grid-cols-[1fr_240px] md:items-center">
                 <div>
