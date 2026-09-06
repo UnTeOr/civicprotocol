@@ -7,9 +7,9 @@
  * This file is server-only (`*.server.ts`): it is never bundled for the
  * client, and env vars are read inside functions (request-time injection).
  */
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-type CivicClient = ReturnType<typeof createClient>;
+type CivicClient = SupabaseClient<any, "civicprotocol", any>;
 
 export const CIVIC_SCHEMA = "civicprotocol";
 
