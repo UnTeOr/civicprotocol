@@ -1,9 +1,10 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Bar, Panel } from "@/components/site-shell";
-import { actions } from "@/data/network";
+import { getNetworkData } from "@/lib/civic-db.functions";
 
 export const Route = createFileRoute("/actions/$id")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
+    const { actions } = await getNetworkData();
     const action = actions.find((p) => p.id === params.id);
     if (!action) throw notFound();
     return { action };

@@ -9,15 +9,17 @@
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
+type CivicClient = SupabaseClient<any, "civicprotocol", any>;
+
 export const CIVIC_SCHEMA = "civicprotocol";
 
 /**
  * Read-only client using the publishable key. Respects row-level security
  * as the anonymous role. Use for everything the public dashboard shows.
  */
-export function civicPublic(): SupabaseClient {
+export function civicPublic(): CivicClient {
   const key = process.env["CIVIC_SUPABASE_PUBLISHABLE_KEY"]!;
-  return createClient(process.env["CIVIC_SUPABASE_URL"]!, key, {
+  return createClient<any, "civicprotocol", any>(process.env["CIVIC_SUPABASE_URL"]!, key, {
     db: { schema: CIVIC_SCHEMA },
     auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
     // New-format sb_ keys are opaque, not JWTs — send apikey only, never
@@ -40,9 +42,9 @@ export function civicPublic(): SupabaseClient {
  * inside the node-ingest endpoint, after verifying the caller's node key.
  * Never used for dashboard reads.
  */
-export function civicAdmin(): SupabaseClient {
+export function civicAdmin(): CivicClient {
   const key = process.env["CIVIC_SUPABASE_SERVICE_ROLE_KEY"]!;
-  return createClient(process.env["CIVIC_SUPABASE_URL"]!, key, {
+  return createClient<any, "civicprotocol", any>(process.env["CIVIC_SUPABASE_URL"]!, key, {
     db: { schema: CIVIC_SCHEMA },
     auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
     global: {

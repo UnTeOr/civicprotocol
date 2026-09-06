@@ -20,6 +20,8 @@ import { Route as ProposalsIndexRouteImport } from './routes/proposals.index'
 import { Route as ProposalsIdRouteImport } from './routes/proposals.$id'
 import { Route as ProtocolIndexRouteImport } from './routes/protocol.index'
 import { Route as ProtocolDocRouteImport } from './routes/protocol.$doc'
+import { Route as ApiPublicIngestRouteImport } from './routes/api/public/ingest'
+import { Route as ApiPublicSnapshotRouteImport } from './routes/api/public/snapshot'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -76,6 +78,16 @@ const ProtocolDocRoute = ProtocolDocRouteImport.update({
   path: '/protocol/$doc',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicIngestRoute = ApiPublicIngestRouteImport.update({
+  id: '/api/public/ingest',
+  path: '/api/public/ingest',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicSnapshotRoute = ApiPublicSnapshotRouteImport.update({
+  id: '/api/public/snapshot',
+  path: '/api/public/snapshot',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -89,6 +101,8 @@ export interface FileRoutesByFullPath {
   '/actions/': typeof ActionsIndexRoute
   '/proposals/': typeof ProposalsIndexRoute
   '/protocol/': typeof ProtocolIndexRoute
+  '/api/public/ingest': typeof ApiPublicIngestRoute
+  '/api/public/snapshot': typeof ApiPublicSnapshotRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,6 +116,8 @@ export interface FileRoutesByTo {
   '/actions': typeof ActionsIndexRoute
   '/proposals': typeof ProposalsIndexRoute
   '/protocol': typeof ProtocolIndexRoute
+  '/api/public/ingest': typeof ApiPublicIngestRoute
+  '/api/public/snapshot': typeof ApiPublicSnapshotRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,6 +132,8 @@ export interface FileRoutesById {
   '/actions/': typeof ActionsIndexRoute
   '/proposals/': typeof ProposalsIndexRoute
   '/protocol/': typeof ProtocolIndexRoute
+  '/api/public/ingest': typeof ApiPublicIngestRoute
+  '/api/public/snapshot': typeof ApiPublicSnapshotRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +149,8 @@ export interface FileRouteTypes {
     | '/actions/'
     | '/proposals/'
     | '/protocol/'
+    | '/api/public/ingest'
+    | '/api/public/snapshot'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +164,8 @@ export interface FileRouteTypes {
     | '/actions'
     | '/proposals'
     | '/protocol'
+    | '/api/public/ingest'
+    | '/api/public/snapshot'
   id:
     | '__root__'
     | '/'
@@ -157,6 +179,8 @@ export interface FileRouteTypes {
     | '/actions/'
     | '/proposals/'
     | '/protocol/'
+    | '/api/public/ingest'
+    | '/api/public/snapshot'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -171,6 +195,8 @@ export interface RootRouteChildren {
   ActionsIndexRoute: typeof ActionsIndexRoute
   ProposalsIndexRoute: typeof ProposalsIndexRoute
   ProtocolIndexRoute: typeof ProtocolIndexRoute
+  ApiPublicIngestRoute: typeof ApiPublicIngestRoute
+  ApiPublicSnapshotRoute: typeof ApiPublicSnapshotRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -252,6 +278,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtocolDocRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/ingest': {
+      id: '/api/public/ingest'
+      path: '/api/public/ingest'
+      fullPath: '/api/public/ingest'
+      preLoaderRoute: typeof ApiPublicIngestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/snapshot': {
+      id: '/api/public/snapshot'
+      path: '/api/public/snapshot'
+      fullPath: '/api/public/snapshot'
+      preLoaderRoute: typeof ApiPublicSnapshotRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -267,6 +307,8 @@ const rootRouteChildren: RootRouteChildren = {
   ActionsIndexRoute: ActionsIndexRoute,
   ProposalsIndexRoute: ProposalsIndexRoute,
   ProtocolIndexRoute: ProtocolIndexRoute,
+  ApiPublicIngestRoute: ApiPublicIngestRoute,
+  ApiPublicSnapshotRoute: ApiPublicSnapshotRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -12,8 +12,10 @@
   - [x] Credentials stored (URL + publishable key in env; service-role key + Postgres URL encrypted)
   - [x] Connection module `src/lib/civic-db.server.ts` scoped to `civicprotocol` schema
   - [ ] User runs `civic-supabase-setup.sql` in their Supabase SQL editor (creates schema, tables, grants, exposes schema)
-  - [ ] Secure `/api/public/ingest` endpoint — nodes push identities/actions/vote totals with per-node keys
-  - [ ] Swap mock data layer for live reads from Supabase
+  - [x] Secure `/api/public/ingest` endpoint — nodes push identities/actions/vote totals with per-node keys
+  - [x] Public `/api/public/snapshot` endpoint — nodes pull the merged network state back (push-out side)
+  - [x] Data layer reads live from Supabase with automatic fallback to the mock snapshot
+  - [ ] Assign per-node API keys (nodes.api_key) and onboard CIVIL.quest as the first pusher
 
 ## Later
 - [ ] Agent multi-node presence + DID transfer model (identity_nodes table is ready for it)

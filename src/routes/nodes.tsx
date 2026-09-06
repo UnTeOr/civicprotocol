@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Panel, SectionHead } from "@/components/site-shell";
 import { useI18n } from "@/lib/i18n";
-import { nodes } from "@/data/network";
+import { useNetworkData } from "@/lib/use-network-data";
 
 export const Route = createFileRoute("/nodes")({
   head: () => ({
@@ -25,6 +25,7 @@ export const Route = createFileRoute("/nodes")({
 function Nodes() {
   const { t } = useI18n();
   const n = new Intl.NumberFormat();
+  const { nodes } = useNetworkData();
 
   return (
     <div className="space-y-6">
