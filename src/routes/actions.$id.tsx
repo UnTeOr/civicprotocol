@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Bar, Panel } from "@/components/site-shell";
 import { proposals } from "@/data/network";
 
-export const Route = createFileRoute("/proposals/$id")({
+export const Route = createFileRoute("/actions/$id")({
   loader: ({ params }) => {
     const proposal = proposals.find((p) => p.id === params.id);
     if (!proposal) throw notFound();

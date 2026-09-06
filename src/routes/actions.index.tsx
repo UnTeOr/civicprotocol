@@ -4,7 +4,7 @@ import { Bar, Panel, SectionHead } from "@/components/site-shell";
 import { useI18n } from "@/lib/i18n";
 import { proposals } from "@/data/network";
 
-export const Route = createFileRoute("/proposals/")({
+export const Route = createFileRoute("/actions/")({
   head: () => ({
     meta: [
       { title: "Proposals & Vote Totals — CIVIC Protocol" },
