@@ -1,0 +1,153 @@
+# CIVIC Protocol — Node Integration Guide
+
+This is the document to send to each node operator. It describes what a node
+builds locally, how it pushes data to the protocol, how it pulls the merged
+network back, and how it keeps its own records separate from everyone else's.
+
+Protocol base URL: `https://civic.wc.tc`
+
+Currently registered nodes:
+
+| Slug | Node | URL |
+| --- | --- | --- |
+| `civilquest` | CIVIL.quest | https://CIVIL.quest |
+| `civilwc` | CIVIL wc.tc | https://CIVIL.wc.tc |
+
+Each node receives one private node key from the protocol maintainer. It is
+stored as a secret on the node (never in client code) and identifies the node
+on every push. A node can only ever publish data as itself.
+
+---
+
+## 1. What each node stores locally
+
+A node keeps two clearly separated sets of records:
+
+- **Local records** — everything created on that node. These are the node's
+  own truth and the only records it is allowed to push.
+- **Network mirror** — a read-only copy of what other nodes published,
+  refreshed from the protocol. Never edited locally, never pushed back.
+
+Every mirrored row carries the `origin_node` / `node_slug` /`home_node` value
+that came from the protocol. A node filters by that value: rows whose origin
+equals its own slug are its own (already local — drop them from the mirror),
+everything else is foreign. This is what prevents duplicates: **a node never
+imports its own records back from the network.**
+
+Recommended local tables (names are suggestions; the shapes matter):
+
+```text
+local_identities   did, username, type, display_name, updated_at
+local_actions      id, title, summary, status, closes_at, updated_at
+local_votes        action_id, votes_for, votes_against, approval, updated_at
+network_mirror_*   same fields + origin/home node slug + synced_at
+```
+
+Identifier rules:
+
+- `did` is globally unique across the network. Suggested form
+  `did:civic:<node-slug>:<local-id>`.
+- `username` is globally unique across the network. A node checks the
+  registry before granting a name.
+- Action `id` is globally unique. Suggested form `<NODE>-ACT-0001`.
+
+---
+
+## 2. Pushing data in
+
+`POST https://civic.wc.tc/api/public/ingest`
+Header: `x-node-key: <your node key>`
+Body:
+
+```json
+{
+  "identities": [
+    { "did": "did:civic:civilquest:42", "username": "ada",
+      "type": "human | agent | organization | nonhuman",
+      "display_name": "Ada", "also_on": ["civilwc"] }
+  ],
+  "actions": [
+    { "id": "CQ-ACT-0317", "title": "...", "summary": "...",
+      "status": "open | passed | rejected | draft",
+      "closes_at": "2026-10-01T00:00:00Z" }
+  ],
+  "totals": [
+    { "action_id": "CQ-ACT-0317", "votes_for": 120,
+      "votes_against": 40, "approval": 75 }
+  ]
+}
+```
+
+Rules:
+
+- Push **only local records** — never re-push anything from the mirror.
+- Push **only what changed** since the last successful push. The node keeps a
+  `last_pushed_at` timestamp and selects local rows with
+  `updated_at > last_pushed_at`. Writes are upserts, so a repeat is harmless,
+  but incremental pushes keep payloads small.
+- Limits per request: 500 identities, 200 actions, 500 totals. Page larger
+  backlogs.
+- Push on change (after a vote, a new action, a new signup) and on a timer as
+  a safety net (every 5 minutes is plenty).
+- Response `{ "ok": true, "node": "...", "ingested": {...} }`. Only advance
+  `last_pushed_at` after a 200. Errors: 401 missing key, 403 unknown key,
+  400 invalid payload.
+- `totals` are the node's own tally for an action, including actions that
+  originated elsewhere — that is how cross-node voting adds up.
+
+---
+
+## 3. Pulling the network back
+
+`GET https://civic.wc.tc/api/public/snapshot` (no authentication)
+
+Returns `generated_at`, `nodes`, `identities`, `identity_nodes`, `actions`,
+`action_node_totals`.
+
+To be added on the protocol side so nodes fetch only what they need:
+
+- `?since=<ISO timestamp>` — only rows changed since that moment.
+- `?exclude_node=<your slug>` — the protocol strips the node's own records
+  out of the response, so a node cannot receive its own data back at all.
+
+Node behaviour:
+
+1. Poll every 1-5 minutes with `since=<last_synced_at>&exclude_node=<slug>`.
+2. Upsert the returned rows into the mirror tables, keyed by `did` /
+   `id` / (`action_id`, `node_slug`).
+3. Defensively skip any row whose origin equals the node's own slug.
+4. Store `generated_at` as the new `last_synced_at`.
+
+Displaying combined data: a node shows local + mirror together, labelled by
+origin node, and computes network approval by summing `votes_for` and
+`votes_against` across all node slugs for an action (its own local tally plus
+each mirrored one).
+
+---
+
+## 4. Conflict and authority rules
+
+- A record's origin node is its only author. The protocol rejects any attempt
+  by another node to overwrite it.
+- Vote totals are stored per node, never merged into one number at the source.
+  Network percentages are always derived by summing per-node rows, so no node
+  can inflate another's tally.
+- Usernames and DIDs are first-come across the network. A node checks the
+  registry before issuing one, and treats a rejected push as a name clash.
+- A participant can appear on several nodes: their home node owns the
+  identity, other nodes list themselves in `also_on`.
+
+---
+
+## Protocol-side work (handled here, before nodes start)
+
+1. Add `updated_at` (timestamptz, default now, maintained on write) to
+   `civicprotocol.identities` and `civicprotocol.actions` — required for
+   `since` filtering. `action_node_totals` already has it.
+2. Add `since` and `exclude_node` query parameters to
+   `GET /api/public/snapshot`, keeping the current no-parameter behaviour
+   (full snapshot) as the default.
+3. Stamp `updated_at` on every ingest upsert.
+4. Publish this guide as a page on the protocol site (`/run-a-node`, plus a
+   copyable version) so node operators always read the current version.
+5. Flip both registered nodes to `live` once their first real push lands.
