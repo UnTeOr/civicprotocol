@@ -27,7 +27,7 @@ function About() {
       <SectionHead
         kicker="About"
         title="A protocol, not a platform"
-        lede="CIVIC is the shared data layer underneath many independent civic platforms. It records what nodes publish — identities, proposals, votes, decisions — and pushes it back out so the whole network stays in sync."
+        lede="CIVIC is the shared data layer underneath many independent civic platforms. It records what nodes publish — identities, actions, votes, decisions — and pushes it back out so the whole network stays in sync."
       />
 
       <div className="grid gap-3 md:grid-cols-3">

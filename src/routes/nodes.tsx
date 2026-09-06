@@ -32,6 +32,14 @@ function Nodes() {
         kicker="Directory"
         title={t("home.nodes")}
         lede="Nodes are the places where people, organizations and agents actually sign up, hold profiles and vote. This site only mirrors what they publish."
+        action={
+          <Link
+            to="/run-a-node"
+            className="rounded-md bg-primary px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-primary-foreground"
+          >
+            {t("nav.node")} →
+          </Link>
+        }
       />
 
       <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">

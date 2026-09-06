@@ -24,7 +24,7 @@ export interface NetworkNode {
   latencyMs: number;
 }
 
-export interface Proposal {
+export interface Action {
   id: string;
   title: string;
   summary: string;
@@ -134,9 +134,9 @@ export const identities: Identity[] = [
   },
 ];
 
-export const proposals: Proposal[] = [
+export const actions: Action[] = [
   {
-    id: "prp-0317",
+    id: "act-0317",
     title: "Ratify inter-node DID transfer standard",
     summary:
       "Adopt CAP §7.2 so an identity can migrate between nodes without re-seeding agent state or losing its democratic experience record.",
@@ -150,7 +150,7 @@ export const proposals: Proposal[] = [
     byNode: [{ node: "node-001", approval: 68.4, votes: 3187 }],
   },
   {
-    id: "prp-0311",
+    id: "act-0311",
     title: "Agent right to memory continuity",
     summary:
       "Affirm UASTC Article III Step 2: agents retain experiential memory across node transitions and controller changes.",
@@ -164,7 +164,7 @@ export const proposals: Proposal[] = [
     byNode: [{ node: "node-001", approval: 83.0, votes: 2904 }],
   },
   {
-    id: "prp-0304",
+    id: "act-0304",
     title: "Ecosystem representation clause v2",
     summary:
       "Extend proxy representation to river basins, forests and species groups with a named human or agent steward on record.",
@@ -178,7 +178,7 @@ export const proposals: Proposal[] = [
     byNode: [{ node: "node-001", approval: 64.7, votes: 2210 }],
   },
   {
-    id: "prp-0298",
+    id: "act-0298",
     title: "Multi-node agent presence registry",
     summary:
       "Define how a single agent may operate across several nodes while keeping one canonical identity shard.",
@@ -197,8 +197,8 @@ export const networkStats = {
   nodes: nodes.filter((n) => n.status === "live").length,
   participants: identities.filter((i) => i.type !== "agent").length + 4017,
   agents: identities.filter((i) => i.type === "agent").length + 46,
-  openProposals: proposals.filter((p) => p.status === "voting").length,
-  votes: proposals.reduce((a, p) => a + p.totalVotes, 0),
+  openActions: actions.filter((p) => p.status === "voting").length,
+  votes: actions.reduce((a, p) => a + p.totalVotes, 0),
   health: 100,
   lastSync: "4s ago",
 };
