@@ -12,6 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NodesRouteImport } from './routes/nodes'
 import { Route as RegistryRouteImport } from './routes/registry'
+import { Route as ProposalsIndexRouteImport } from './routes/proposals.index'
+import { Route as ProposalsIdRouteImport } from './routes/proposals.$id'
+import { Route as ProtocolIndexRouteImport } from './routes/protocol.index'
+import { Route as ProtocolDocRouteImport } from './routes/protocol.$doc'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +32,93 @@ const RegistryRoute = RegistryRouteImport.update({
   path: '/registry',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProposalsIndexRoute = ProposalsIndexRouteImport.update({
+  id: '/proposals/',
+  path: '/proposals/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProposalsIdRoute = ProposalsIdRouteImport.update({
+  id: '/proposals/$id',
+  path: '/proposals/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProtocolIndexRoute = ProtocolIndexRouteImport.update({
+  id: '/protocol/',
+  path: '/protocol/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProtocolDocRoute = ProtocolDocRouteImport.update({
+  id: '/protocol/$doc',
+  path: '/protocol/$doc',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/nodes': typeof NodesRoute
   '/registry': typeof RegistryRoute
+  '/proposals/$id': typeof ProposalsIdRoute
+  '/protocol/$doc': typeof ProtocolDocRoute
+  '/proposals/': typeof ProposalsIndexRoute
+  '/protocol/': typeof ProtocolIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/nodes': typeof NodesRoute
   '/registry': typeof RegistryRoute
+  '/proposals/$id': typeof ProposalsIdRoute
+  '/protocol/$doc': typeof ProtocolDocRoute
+  '/proposals': typeof ProposalsIndexRoute
+  '/protocol': typeof ProtocolIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/nodes': typeof NodesRoute
   '/registry': typeof RegistryRoute
+  '/proposals/$id': typeof ProposalsIdRoute
+  '/protocol/$doc': typeof ProtocolDocRoute
+  '/proposals/': typeof ProposalsIndexRoute
+  '/protocol/': typeof ProtocolIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/nodes' | '/registry'
+  fullPaths:
+    | '/'
+    | '/nodes'
+    | '/registry'
+    | '/proposals/$id'
+    | '/protocol/$doc'
+    | '/proposals/'
+    | '/protocol/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/nodes' | '/registry'
-  id: '__root__' | '/' | '/nodes' | '/registry'
+  to:
+    | '/'
+    | '/nodes'
+    | '/registry'
+    | '/proposals/$id'
+    | '/protocol/$doc'
+    | '/proposals'
+    | '/protocol'
+  id:
+    | '__root__'
+    | '/'
+    | '/nodes'
+    | '/registry'
+    | '/proposals/$id'
+    | '/protocol/$doc'
+    | '/proposals/'
+    | '/protocol/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   NodesRoute: typeof NodesRoute
   RegistryRoute: typeof RegistryRoute
+  ProposalsIdRoute: typeof ProposalsIdRoute
+  ProtocolDocRoute: typeof ProtocolDocRoute
+  ProposalsIndexRoute: typeof ProposalsIndexRoute
+  ProtocolIndexRoute: typeof ProtocolIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +144,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegistryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/proposals/': {
+      id: '/proposals/'
+      path: '/proposals'
+      fullPath: '/proposals/'
+      preLoaderRoute: typeof ProposalsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proposals/$id': {
+      id: '/proposals/$id'
+      path: '/proposals/$id'
+      fullPath: '/proposals/$id'
+      preLoaderRoute: typeof ProposalsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/protocol/': {
+      id: '/protocol/'
+      path: '/protocol'
+      fullPath: '/protocol/'
+      preLoaderRoute: typeof ProtocolIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/protocol/$doc': {
+      id: '/protocol/$doc'
+      path: '/protocol/$doc'
+      fullPath: '/protocol/$doc'
+      preLoaderRoute: typeof ProtocolDocRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +179,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   NodesRoute: NodesRoute,
   RegistryRoute: RegistryRoute,
+  ProposalsIdRoute: ProposalsIdRoute,
+  ProtocolDocRoute: ProtocolDocRoute,
+  ProposalsIndexRoute: ProposalsIndexRoute,
+  ProtocolIndexRoute: ProtocolIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
