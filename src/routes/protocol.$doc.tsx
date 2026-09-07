@@ -25,12 +25,29 @@ export const Route = createFileRoute("/protocol/$doc")({
       };
     }
     const { meta } = loaderData;
+    const url = `https://civic.wc.tc/protocol/${encodeURIComponent(meta.id)}`;
     return {
       meta: [
         { title: `${meta.name} ${meta.version} — CIVIC Protocol` },
         { name: "description", content: meta.blurb },
         { property: "og:title", content: `${meta.name} ${meta.version} — CIVIC Protocol` },
         { property: "og:description", content: meta.blurb },
+        { property: "og:type", content: "article" },
+        { property: "og:url", content: url },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: `${meta.name} ${meta.version}`,
+            description: meta.blurb,
+            url,
+            isPartOf: { "@type": "WebSite", name: "CIVIC Protocol", url: "https://civic.wc.tc" },
+          }),
+        },
       ],
     };
   },
