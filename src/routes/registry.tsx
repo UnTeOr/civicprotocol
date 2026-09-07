@@ -20,7 +20,10 @@ export const Route = createFileRoute("/registry")({
         content:
           "Search every unique username and DID registered across the CIVIC network.",
       },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://civic.wc.tc/registry" },
     ],
+    links: [{ rel: "canonical", href: "https://civic.wc.tc/registry" }],
   }),
   component: Registry,
 });

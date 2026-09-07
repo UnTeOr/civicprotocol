@@ -16,7 +16,10 @@ export const Route = createFileRoute("/about")({
         content:
           "A read-only data substrate keeping independent civic platforms in sync — no accounts, no edits.",
       },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://civic.wc.tc/about" },
     ],
+    links: [{ rel: "canonical", href: "https://civic.wc.tc/about" }],
   }),
   component: About,
 });

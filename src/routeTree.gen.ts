@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as NodesRouteImport } from './routes/nodes'
 import { Route as RegistryRouteImport } from './routes/registry'
 import { Route as RunANodeRouteImport } from './routes/run-a-node'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ActionsIndexRouteImport } from './routes/actions.index'
 import { Route as ActionsIdRouteImport } from './routes/actions.$id'
 import { Route as ProposalsIndexRouteImport } from './routes/proposals.index'
@@ -46,6 +47,11 @@ const RegistryRoute = RegistryRouteImport.update({
 const RunANodeRoute = RunANodeRouteImport.update({
   id: '/run-a-node',
   path: '/run-a-node',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ActionsIndexRoute = ActionsIndexRouteImport.update({
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/nodes': typeof NodesRoute
   '/registry': typeof RegistryRoute
   '/run-a-node': typeof RunANodeRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/actions/$id': typeof ActionsIdRoute
   '/proposals/$id': typeof ProposalsIdRoute
   '/protocol/$doc': typeof ProtocolDocRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByTo {
   '/nodes': typeof NodesRoute
   '/registry': typeof RegistryRoute
   '/run-a-node': typeof RunANodeRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/actions/$id': typeof ActionsIdRoute
   '/proposals/$id': typeof ProposalsIdRoute
   '/protocol/$doc': typeof ProtocolDocRoute
@@ -126,6 +134,7 @@ export interface FileRoutesById {
   '/nodes': typeof NodesRoute
   '/registry': typeof RegistryRoute
   '/run-a-node': typeof RunANodeRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/actions/$id': typeof ActionsIdRoute
   '/proposals/$id': typeof ProposalsIdRoute
   '/protocol/$doc': typeof ProtocolDocRoute
@@ -143,6 +152,7 @@ export interface FileRouteTypes {
     | '/nodes'
     | '/registry'
     | '/run-a-node'
+    | '/sitemap.xml'
     | '/actions/$id'
     | '/proposals/$id'
     | '/protocol/$doc'
@@ -158,6 +168,7 @@ export interface FileRouteTypes {
     | '/nodes'
     | '/registry'
     | '/run-a-node'
+    | '/sitemap.xml'
     | '/actions/$id'
     | '/proposals/$id'
     | '/protocol/$doc'
@@ -173,6 +184,7 @@ export interface FileRouteTypes {
     | '/nodes'
     | '/registry'
     | '/run-a-node'
+    | '/sitemap.xml'
     | '/actions/$id'
     | '/proposals/$id'
     | '/protocol/$doc'
@@ -189,6 +201,7 @@ export interface RootRouteChildren {
   NodesRoute: typeof NodesRoute
   RegistryRoute: typeof RegistryRoute
   RunANodeRoute: typeof RunANodeRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ActionsIdRoute: typeof ActionsIdRoute
   ProposalsIdRoute: typeof ProposalsIdRoute
   ProtocolDocRoute: typeof ProtocolDocRoute
@@ -234,6 +247,13 @@ declare module '@tanstack/react-router' {
       path: '/run-a-node'
       fullPath: '/run-a-node'
       preLoaderRoute: typeof RunANodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/actions/': {
@@ -301,6 +321,7 @@ const rootRouteChildren: RootRouteChildren = {
   NodesRoute: NodesRoute,
   RegistryRoute: RegistryRoute,
   RunANodeRoute: RunANodeRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ActionsIdRoute: ActionsIdRoute,
   ProposalsIdRoute: ProposalsIdRoute,
   ProtocolDocRoute: ProtocolDocRoute,

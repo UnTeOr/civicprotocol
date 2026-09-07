@@ -19,7 +19,10 @@ export const Route = createFileRoute("/")({
         content:
           "Live overview of the CIVIC Protocol network: nodes, registered identities, agents and aggregated vote totals.",
       },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://civic.wc.tc/" },
     ],
+    links: [{ rel: "canonical", href: "https://civic.wc.tc/" }],
   }),
   component: Overview,
 });

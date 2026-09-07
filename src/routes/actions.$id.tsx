@@ -16,13 +16,17 @@ export const Route = createFileRoute("/actions/$id")({
       };
     }
     const { action } = loaderData;
+    const url = `https://civic.wc.tc/actions/${encodeURIComponent(action.id)}`;
     return {
       meta: [
         { title: `${action.title} — CIVIC Protocol` },
         { name: "description", content: action.summary },
         { property: "og:title", content: `${action.title} — CIVIC Protocol` },
         { property: "og:description", content: action.summary },
+        { property: "og:type", content: "article" },
+        { property: "og:url", content: url },
       ],
+      links: [{ rel: "canonical", href: url }],
     };
   },
   component: ActionDetail,

@@ -17,7 +17,10 @@ export const Route = createFileRoute("/nodes")({
         property: "og:description",
         content: "Connected CIVIC nodes, their sync state, and where to sign up and take part.",
       },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://civic.wc.tc/nodes" },
     ],
+    links: [{ rel: "canonical", href: "https://civic.wc.tc/nodes" }],
   }),
   component: Nodes,
 });

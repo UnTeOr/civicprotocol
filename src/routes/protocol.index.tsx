@@ -16,7 +16,10 @@ export const Route = createFileRoute("/protocol/")({
         property: "og:description",
         content: "Whitepaper, Agentic CAP and UASTC Charter — the framework behind the network.",
       },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://civic.wc.tc/protocol" },
     ],
+    links: [{ rel: "canonical", href: "https://civic.wc.tc/protocol" }],
   }),
   component: ProtocolIndex,
 });
