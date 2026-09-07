@@ -15,7 +15,10 @@ export const Route = createFileRoute("/run-a-node")({
         property: "og:description",
         content: "What it takes to stand up your own node on the CIVIC network.",
       },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://civic.wc.tc/run-a-node" },
     ],
+    links: [{ rel: "canonical", href: "https://civic.wc.tc/run-a-node" }],
   }),
   component: RunANode,
 });

@@ -18,7 +18,10 @@ export const Route = createFileRoute("/actions/")({
         property: "og:description",
         content: "Approval percentages and per-node vote breakdowns across the CIVIC network.",
       },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://civic.wc.tc/actions" },
     ],
+    links: [{ rel: "canonical", href: "https://civic.wc.tc/actions" }],
   }),
   component: Actions,
 });
